@@ -1,0 +1,1 @@
+Testes automatizados podem ser adicionados em src/test/java.

@@ -1,0 +1,22 @@
+# Arquivos gerados pela compilação Java/Maven
+backend/target/
+
+# Arquivos de IDE e sistema operacional
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs e arquivos temporários
+*.log
+backend/erro.txt
+backend/[Help
+backend/type
+
+# Configurações locais e segredos
+backend/src/main/resources/application-local.properties
+.env
+
+# Descritores e fotos faciais pertencem ao navegador; não devem ir ao repositório.
+frontend/local-data/

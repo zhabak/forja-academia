@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<!-- 1. METADADOS: título, idioma e carregamento da folha de estilos. -->
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forja Academia | Gestão</title><link rel="stylesheet" href="style.css?v=forja-8">
+</head>
+<body>
+<!-- 2. LOGIN: apresentação da marca e entrada demonstrativa. -->
+<div id="login" class="login">
+  <div class="login-brand"><img src="assets/forja-logo.png" alt="Logo Forja Fitness"><p>DISCIPLINA TRANSFORMA.</p></div>
+  <div class="card">
+    <span class="eyebrow">ÁREA DE GESTÃO</span><h1>Bem-vindo à Forja.</h1><p>Seu próximo dia de evolução começa aqui.</p><label for="user">Usuário</label>
+    <input id="user" placeholder="Usuário" value="admin">
+    <label for="pass">Senha</label><input id="pass" type="password" placeholder="Senha" value="admin123">
+    <button onclick="login()">Entrar</button><p><a class="aluno-link" href="aluno.html">Abrir área do aluno →</a></p><small id="loginMsg"></small>
+  </div>
+</div>
+
+<!-- 3. APLICAÇÃO: área exibida após entrar, com cabeçalho e navegação. -->
+<div id="app" class="hidden">
+<header><div class="brand"><img src="assets/forja-logo.png" alt="Logo Forja Fitness"><div><strong>FORJA<span class="brand-light"> ACADEMIA</span></strong><span>DISCIPLINA TRANSFORMA</span></div></div><a class="aluno-link" href="aluno.html">Área do aluno ↗</a>
+<button class="outline" onclick="logout()">Sair</button></header>
+<main>
+<nav aria-label="Navegação principal">
+<button onclick="show('dashboard')">Dashboard</button>
+<button onclick="show('alunos')">Alunos</button>
+<button onclick="show('planos')">Planos</button>
+<button onclick="show('acesso')">Controle de Acesso</button>
+</nav>
+
+<!-- 4. PAINEL: destaque da marca e cartões preenchidos por loadDashboard(). -->
+<section id="dashboard" class="view">
+<div class="hero"><div><span class="eyebrow">FORJA ACADEMIA / VISÃO GERAL</span><h2>Força na rotina.<br><em>Controle na gestão.</em></h2><p>Alunos, planos e acessos. Tudo pronto para mais um dia de evolução.</p><button onclick="show('alunos')">Gerenciar alunos ↗</button></div><img src="assets/forja-logo.png" alt="Forja Fitness — Disciplina transforma"></div><div class="section-heading"><h3>Seu dia em números</h3><span>VISÃO DA ACADEMIA</span></div><div class="grid" id="cards"></div>
+</section>
+
+<!-- 5. ALUNOS: cadastro, edição de dados, tabela e controles de matrícula. -->
+<section id="alunos" class="view hidden">
+<div class="page-heading"><span class="eyebrow">GESTÃO DE ALUNOS</span><h2>Quem treina com a Forja.</h2><p>Cadastre, acompanhe e mantenha cada evolução em dia.</p></div>
+
+<div class="panel">
+  <h3>Dados do aluno</h3><p class="muted">Preencha os dados e escolha o plano para começar.</p><!-- 5.1 CAMPOS: os IDs ligam este formulário às funções de app.js. -->
+<div class="form-grid">
+  <input type="hidden" id="alunoId">
+  <label class="field">Nome completo *<input id="nome" placeholder="Nome *"></label>
+  <label class="field">CPF *<input id="cpf" placeholder="CPF *" inputmode="numeric" maxlength="14" oninput="aplicarMascara(this, formatarCpf)"></label>
+  <label class="field">Data de nascimento<input id="nascimento" type="date"></label>
+  <label class="field">Telefone<input id="telefone" inputmode="tel" placeholder="Telefone (DDD)" maxlength="15" oninput="aplicarMascara(this, formatarTelefone)"></label>
+  <label class="field">E-mail<input id="email" placeholder="E-mail"></label>
+
+  <label class="field">Plano *<select id="planoAluno">
+    <option value="">Selecione um plano *</option>
+  </select>
+
+  </label><label class="field" for="inicioPlano">Início do plano
+  <input id="inicioPlano" type="date"><small class="muted">Aceita datas passadas. O vencimento é calculado pela duração do plano: mensal com início em 06/08 vence em 06/09.</small></label><label class="field">Meio de pagamento<select id="meioPagamento"><option value="">Não informado</option><option value="CARTAO">Cartão</option><option value="PIX">Pix</option><option value="DINHEIRO">Dinheiro</option></select></label></div>
+
+  <div class="camera-actions">
+    <button onclick="salvarAlunoComPlano()">Salvar cadastro / dados</button>
+    <button onclick="limparFormularioAluno()" class="outline">Limpar</button>
+  </div>
+  <span id="alunoMsg"></span>
+</div>
+
+<!-- 5.2 LISTAGEM: renderAlunos() preenche as oito colunas e botões. -->
+<div class="panel table-panel">
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Nome</th>
+  <th>CPF</th>
+  <th>Plano</th>
+  <th>Pagamento</th>
+  <th>Vencimento</th>
+  <th>Status</th>
+  <th>Face</th>
+  <th>Ações</th>
+</tr>
+</thead>
+<tbody id="alunosTabela"></tbody>
+</table>
+</div>
+
+<!-- 5.3 MATRÍCULA: formulário usado por abrirEdicaoPlano() e salvarPlanoAluno(). -->
+<div id="modalPlano" class="panel hidden">
+  <h3>Editar plano do aluno</h3>
+  <input type="hidden" id="matriculaAlunoId">
+  <select id="novoPlanoAluno">
+    <option value="">Selecione o novo plano</option>
+  </select>
+  <label for="novaDataInicioPlano">Nova data de início</label>
+  <input id="novaDataInicioPlano" type="date">
+  <label for="editarMeioPagamento">Meio de pagamento</label><select id="editarMeioPagamento"><option value="">Não informado</option><option value="CARTAO">Cartão</option><option value="PIX">Pix</option><option value="DINHEIRO">Dinheiro</option></select>
+  <label for="statusMatricula">Status da matrícula</label>
+  <select id="statusMatricula"><option>ATIVA</option><option>CANCELADA</option><option>VENCIDA</option></select>
+  <label for="fimPlano">Data de vencimento</label>
+  <input id="fimPlano" type="date">
+  <button type="button" onclick="simularPlanoVencido()">⏪ Simular plano vencido</button>
+  <div class="camera-actions">
+    <button onclick="salvarPlanoAluno()">Salvar alteração de plano</button>
+    <button onclick="fecharEdicaoPlano()" class="outline">Cancelar</button>
+  </div>
+  <span id="planoAlunoMsg"></span>
+</div>
+
+</section>
+
+<!-- 6. PLANOS: catálogo carregado pelo backend; não há formulário de criação nesta tela. -->
+<section id="planos" class="view hidden">
+<div class="page-heading"><span class="eyebrow">PLANOS E MODALIDADES</span><h2>O próximo nível começa aqui.</h2><p>Consulte as opções de treino da academia.</p></div><div class="panel"><table><thead><tr><th>Plano</th><th>Modalidade</th><th>Duração</th><th>Valor</th></tr></thead>
+<tbody id="planosTabela"></tbody></table></div>
+</section>
+
+<!-- 7. FACIAL: captura da câmera, cadastro do rosto e verificação de acesso. -->
+<section id="acesso" class="view hidden">
+<div class="page-heading"><span class="eyebrow">CONTROLE DE ACESSO</span><h2>Seu rosto. Sua entrada.</h2><p>Identificação facial com verificação do plano do aluno.</p></div>
+<div class="face-layout">
+<div class="panel camera-panel">
+  <div class="camera-wrap"><video id="video" autoplay muted playsinline></video><div class="face-guide"></div></div>
+  <div class="camera-actions"><button onclick="iniciarCamera()">📷 Iniciar câmera</button><button onclick="pararCamera()" class="outline">Parar</button></div>
+  <p id="cameraMsg" class="muted">Clique em “Iniciar câmera” e permita o acesso à webcam.</p>
+</div>
+<div class="panel">
+  <h3>Autenticar entrada</h3>
+  <p class="muted">O sistema detecta o rosto pela webcam, compara com os rostos cadastrados neste navegador e consulta o backend para validar aluno ativo e plano.</p>
+  <button onclick="autenticarRosto()" class="primary">🔐 Reconhecer e verificar acesso</button>
+  <div id="resultado"></div>
+  <hr>
+  <h3>Cadastrar rosto para apresentação</h3>
+  <select id="alunoFace"></select>
+  <button onclick="cadastrarRosto()">👤 Capturar rosto do aluno selecionado</button>
+  <p class="muted small">Para a demonstração, o modelo facial é executado no navegador e o descritor e uma foto da captura ficam no armazenamento local deste navegador.</p>
+</div>
+</div>
+</section>
+<footer>FORJA ACADEMIA <span>Disciplina transforma. Todos os dias.</span></footer></main></div>
+<!-- 8. SCRIPTS: biblioteca facial assíncrona para não bloquear os demais cadastros. -->
+<dialog id="codigoDialog" aria-labelledby="codigoTitulo"><h3 id="codigoTitulo">Código de acesso</h3><p id="codigoDestinatario"></p><strong id="codigoValor" style="display:block;font-size:24px;letter-spacing:2px;overflow-wrap:anywhere"></strong><p id="codigoStatus" role="status"></p><p>Válido por 30 minutos, uma única vez e somente para o CPF indicado.</p><button onclick="atualizarStatusCodigo()">Verificar uso</button><button onclick="fecharCodigo()">Fechar</button></dialog>
+<dialog id="fotoAlunoDialog"><h3 id="fotoAlunoTitulo">Foto do aluno</h3><img id="fotoAlunoImagem" alt="Foto capturada no cadastro facial"><p>Foto armazenada neste navegador.</p><button onclick="fecharFotoAluno()">Fechar</button></dialog>
+<script async src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+<script src="app.js?v=forja-8"></script>
+</body></html>

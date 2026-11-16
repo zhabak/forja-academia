@@ -1,0 +1,468 @@
+/* FORJA ACADEMIA — aparência visual. Classes .hidden e .active são controladas pelo JavaScript. */
+
+/* 1. PALETA — cores e variáveis compartilhadas pela identidade Forja. */
+:root {
+  color-scheme:dark;
+  --bg:#0c0d0f;
+  --panel:#15171b;
+  --line:#2a2c31;
+  --text:#f2f2f3;
+  --muted:#a3a5ad;
+  --orange:#ff601e}
+* {
+  box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,'Segoe UI',Arial,sans-serif;
+  font-size:14px;
+  line-height:1.5}
+.hidden {
+  display:none!important}
+button,input,select {
+  font:inherit}
+button {
+  border:1px solid transparent;
+  background:var(--orange);
+  color:#140b05;
+  font-weight:700;
+  border-radius:9px;
+  padding:12px 19px;
+  cursor:pointer;
+  transition:background .2s,transform .2s}
+button:hover {
+  background:#ff814d;
+  transform:translateY(-1px)}
+button:focus-visible,input:focus,select:focus {
+  outline:2px solid var(--orange);
+  outline-offset:3px}
+.outline {
+  background:transparent!important;
+  color:#e4e4e7!important;
+  border:1px solid #45464d!important}
+
+/* 2. CABEÇALHO — logo, nome da academia e ação de saída. */
+header {
+  max-width:1440px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:28px;
+  padding:18px 40px;
+  border-bottom:1px solid var(--line)}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-right:auto}
+.brand img {
+  width:64px;
+  height:64px;
+  object-fit:contain;
+  border-radius:10px}
+.brand strong {
+  font-size:22px;
+  letter-spacing:1px}
+.brand-light {
+  font-weight:400;
+  color:#c1c1c6}
+.brand>div>span {
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:3px;
+  margin-top:3px}
+.header-meta {
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--muted)}
+
+/* 3. NAVEGAÇÃO E PAINEL — limites da página, menu e destaque inicial. */
+main {
+  max-width:1360px;
+  margin:auto;
+  padding:0 40px 24px}
+nav {
+  display:flex;
+  gap:10px;
+  padding:22px 0;
+  flex-wrap:wrap}
+nav button {
+  background:transparent;
+  color:#a9aab0;
+  border:1px solid transparent;
+  font-weight:600}
+nav button:hover,nav button.active {
+  background:#ff601e15;
+  border-color:#ff601e55;
+  color:#ff8a57}
+.eyebrow {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px;
+  color:var(--orange)}
+.hero {
+  position:relative;
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  align-items:center;
+  overflow:hidden;
+  background:linear-gradient(120deg,#1e1b19,#101112 65%);
+  border:1px solid #37302b;
+  border-radius:20px;
+  padding:38px 44px;
+  min-height:330px}
+.hero h2 {
+  font-size:clamp(30px,3.5vw,50px);
+  line-height:1.1;
+  letter-spacing:-1.7px;
+  margin:17px 0}
+.hero em {
+  font-style:normal;
+  color:var(--orange)}
+.hero p {
+  color:#acadb2;
+  max-width:430px;
+  margin-bottom:24px}
+.hero img {
+  width:100%;
+  max-height:310px;
+  object-fit:contain;
+  mix-blend-mode:screen}
+.section-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:26px 0 14px}
+.section-heading h3 {
+  margin:0;
+  font-size:18px}
+.section-heading span {
+  color:#80828b;
+  font-size:10px;
+  letter-spacing:2px}
+
+/* 4. INDICADORES — cartões de métricas em três colunas. */
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px}
+.metric {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px;
+  color:#b3b5be;
+  border-top:2px solid #c44f21}
+.metric b {
+  display:block;
+  margin-top:15px;
+  font-size:38px;
+  font-weight:650;
+  line-height:1.1;
+  color:#f5f5f5}
+.page-heading {
+  padding:15px 0 24px}
+.page-heading h2 {
+  font-size:32px;
+  letter-spacing:-1px;
+  margin:7px 0}
+.page-heading p {
+  color:var(--muted);
+  margin:0}
+
+/* 5. FORMULÁRIOS — painéis, campos e organização do cadastro. */
+.panel {
+  background:var(--panel);
+  padding:26px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  margin-bottom:20px}
+.panel h3 {
+  margin:0 0 8px;
+  font-size:18px}
+.muted,.card p {
+  color:var(--muted)}
+.small {
+  font-size:12px}
+.form-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  margin:22px 0}
+.field {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  color:#c9cbd1;
+  font-size:12px;
+  font-weight:600}
+.form-grid input[type=hidden] {
+  display:none}
+input,select {
+  width:100%;
+  min-width:0;
+  background:#0e1013;
+  border:1px solid #373941;
+  border-radius:8px;
+  color:#eaeaec;
+  padding:12px 13px;
+  min-height:45px}
+input::placeholder {
+  color:#777b85}
+input:disabled,select:disabled {
+  opacity:.55}
+.camera-actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px}
+.panel>span:not(.eyebrow) {
+  display:block;
+  margin-top:12px;
+  color:#e6af8c}
+
+/* 6. TABELAS — cabeçalhos, linhas, ações e mensagens vazias. */
+table {
+  width:100%;
+  border-collapse:collapse}
+th {
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:10px;
+  color:#9498a2;
+  font-weight:700;
+  white-space:nowrap}
+th,td {
+  text-align:left;
+  padding:16px 12px;
+  border-bottom:1px solid var(--line)}
+td {
+  font-size:12px;
+  color:#d1d2d7}
+td button {
+  padding:7px 10px;
+  font-size:11px;
+  margin:3px 2px;
+  background:#282a30;
+  color:#f2b090;
+  border:1px solid #484039}
+tbody tr:hover {
+  background:#ffffff04}
+tbody:empty:after {
+  content:'Nenhum aluno cadastrado. Comece pelo formulário acima.';
+  display:block;
+  padding:28px 12px;
+  color:var(--muted);
+  white-space:normal}
+#planosTabela:empty:after {
+  content:'Carregando planos…'}
+.table-panel {
+  overflow-x:auto;
+  padding:10px 16px}
+#painelSimulacao {
+  border-style:dashed;
+  background:#181512}
+#painelSimulacao h3 {
+  margin-top:7px}
+#modalPlano>input,#modalPlano>select {
+  margin:8px 0 14px}
+#modalPlano>label {
+  font-size:12px;
+  color:var(--muted)}
+
+/* 7. RECONHECIMENTO FACIAL — câmera, guia e mensagens de resultado. */
+.face-layout {
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:22px}
+.camera-wrap {
+  position:relative;
+  background:#08090a;
+  border:1px solid #32343a;
+  border-radius:12px;
+  overflow:hidden;
+  min-height:340px;
+  display:grid;
+  place-items:center}
+.camera-wrap video {
+  width:100%;
+  max-height:460px;
+  object-fit:cover;
+  /* Prévia em espelho para acompanhar os movimentos do usuário. */
+  transform:scaleX(-1)}
+.face-guide {
+  position:absolute;
+  width:46%;
+  height:72%;
+  border:2px dashed #ff601e88;
+  border-radius:50%;
+  pointer-events:none}
+.primary {
+  background:var(--orange)}
+.ok,.bad {
+  padding:16px;
+  border-radius:8px;
+  margin-top:18px;
+  font-weight:600}
+.ok {
+  background:#123326;
+  color:#83e2b2;
+  border:1px solid #265b43}
+.bad {
+  background:#361b1b;
+  color:#ffb0a4;
+  border:1px solid #68312b}
+hr {
+  border:0;
+  border-top:1px solid var(--line);
+  margin:28px 0}
+#alunoFace {
+  margin:8px 0 16px}
+
+/* 8. RODAPÉ — assinatura da marca. */
+footer {
+  display:flex;
+  justify-content:space-between;
+  border-top:1px solid var(--line);
+  margin-top:38px;
+  padding-top:22px;
+  letter-spacing:2px;
+  font-size:10px;
+  color:#999ba3}
+footer span {
+  letter-spacing:0}
+
+/* 9. LOGIN — composição da logo e formulário demonstrativo. */
+.login {
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:60px;
+  max-width:1100px;
+  margin:auto;
+  padding:50px}
+.login-brand img {
+  width:100%;
+  max-width:490px;
+  mix-blend-mode:screen}
+.login-brand p {
+  text-align:center;
+  letter-spacing:5px;
+  color:#90939b;
+  font-size:11px}
+.card {
+  padding:36px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 20px 60px #0005}
+.card h1 {
+  font-size:32px;
+  letter-spacing:-1px;
+  line-height:1.2;
+  margin:14px 0}
+.card p {
+  margin-bottom:30px}
+.card label {
+  display:block;
+  margin:17px 0 7px;
+  font-size:12px;
+  color:#bbb}
+.card button {
+  width:100%;
+  margin-top:24px}
+.card small {
+  display:block;
+  color:#ffb39b;
+  margin-top:12px}
+
+/* 10. RESPONSIVIDADE — adaptação para tablets. */
+@media(max-width:850px) {
+  main {
+  padding:0 20px 20px}
+header {
+  padding:14px 20px}
+.header-meta {
+  display:none}
+.form-grid {
+  grid-template-columns:1fr 1fr}
+.hero {
+  padding:28px}
+.hero img {
+  max-height:240px}
+.face-layout {
+  grid-template-columns:1fr}
+.login {
+  gap:24px;
+  padding:24px}
+.card {
+  padding:24px}
+}
+
+/* 11. RESPONSIVIDADE — adaptação para celulares. */
+@media(max-width:560px) {
+  .grid,.form-grid,.login {
+  grid-template-columns:1fr}
+.hero {
+  grid-template-columns:1fr}
+.hero img {
+  display:none}
+.hero h2 {
+  font-size:36px}
+.brand strong {
+  font-size:17px}
+.brand img {
+  width:46px;
+  height:46px}
+header {
+  gap:10px}
+.panel {
+  padding:18px}
+.page-heading h2 {
+  font-size:26px}
+.login-brand img {
+  max-height:210px;
+  object-fit:contain}
+.login-brand p {
+  display:none}
+.login {
+  gap:10px}
+.section-heading span {
+  display:none}
+nav {
+  gap:0}
+nav button {
+  padding:10px}
+footer {
+  gap:20px}
+.camera-wrap {
+  min-height:260px}
+}
+
+
+/* Seleção única de aluno: mantém contraste no tema escuro e usa controle nativo acessível. */
+.selecao-aluno { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.selecao-aluno input[type="radio"] { width: 18px; height: 18px; min-height: 0; margin: 0; padding: 0; flex-shrink: 0; accent-color: var(--orange); cursor: pointer; }
+#alunosTabela tr.aluno-selecionado { background: #352218; }
+#alunosTabela tr.aluno-selecionado:hover { background: #40281b; }
+#alunosTabela tr.aluno-selecionado td { color: #fff0e7; }
+#alunosTabela tr.aluno-selecionado td:first-child { box-shadow: inset 3px 0 var(--orange); }
+
+/* Exclusão e visualização da foto facial. */
+button.danger { color: #ffb4aa; border-color: #764239; }
+dialog { background: #15171b; color: #f2f2f3; border: 1px solid #45464d; border-radius: 16px; max-width: min(420px,90vw); padding: 24px; }
+dialog::backdrop { background: #000b; }
+#fotoAlunoImagem { display: block; width: 100%; border-radius: 10px; transform: scaleX(-1); }
+/* A foto é exibida como a câmera; os pixels originais salvos não são alterados. */
+
+/* Gestão no celular: tabelas de alunos viram cartões com rótulos. */
+.aluno-link{color:#ffad83;text-decoration:none;font-size:12px;white-space:nowrap}
+@media(max-width:650px){
+ header{flex-wrap:wrap}.brand{flex:1}.brand-light{display:block}header .aluno-link{font-size:11px}
+ main{padding:0 12px 20px}nav{position:sticky;top:0;z-index:4;background:#0c0d0ff5;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 0}nav button{font-size:11px;padding:10px 4px;min-height:46px}
+ .form-grid,.grid,.face-layout{grid-template-columns:1fr}.panel{padding:16px}.hero{padding:24px}.hero h2{font-size:30px}.camera-actions{flex-direction:column}.camera-actions button{width:100%;min-height:46px}
+ .table-panel{overflow:visible;background:none;padding:0;border:0}.table-panel table,.table-panel tbody,.table-panel tr,.table-panel td{display:block;width:100%}.table-panel thead{display:none}.table-panel tr{background:#191b20;border:1px solid #393b43;border-radius:14px;margin-bottom:16px;padding:12px}.table-panel td{padding:9px 6px;overflow-wrap:anywhere}.table-panel td::before{display:block;color:#969ba6;font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}.table-panel td:nth-child(1)::before{content:'Selecionar / ID'}.table-panel td:nth-child(2)::before{content:'Aluno'}.table-panel td:nth-child(3)::before{content:'CPF'}.table-panel td:nth-child(4)::before{content:'Plano'}.table-panel td:nth-child(5)::before{content:'Vencimento'}.table-panel td:nth-child(6)::before{content:'Status'}.table-panel td:nth-child(7)::before{content:'Facial'}.table-panel td:nth-child(8)::before{content:'Ações'}.table-panel td button{min-height:42px;margin:4px}.table-panel td:last-child{border:0}#planos>.panel{overflow-x:auto}#planos table{min-width:330px}.page-heading h2{font-size:25px}footer{flex-direction:column;gap:8px}
+}
